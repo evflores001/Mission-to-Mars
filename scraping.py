@@ -71,11 +71,11 @@ def featured_image(browser):
     html = browser.html
     img_soup = soup(html, 'html.parser')
     
-
+     # Find the relative image url
+    browser.is_element_present_by_xpath('/html/body/div/div/div/main/div/div[2]/div/div/div[3]/div[2]/div[2]/div/div/img', wait_time=1)
     # Add try/except for error handling
     try:
-        # Find the relative image url
-        browser.is_element_present_by_xpath('/html/body/div/div/div/main/div/div[2]/div/div/div[3]/div[2]/div[2]/div/div/img', wait_time=1)
+       
         marsImage = browser.find_by_xpath('/html/body/div/div/div/main/div/div[2]/div/div/div[3]/div[2]/div[2]/div/div/img')['src']
 
     except BaseException:
