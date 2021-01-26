@@ -103,7 +103,7 @@ def mars_facts():
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html(classes="table table-striped")
 
-def hemi_image(browser):
+def hemi_img(browser):
 
     # 1. Use browser to visit the URL 
     url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
@@ -112,35 +112,33 @@ def hemi_image(browser):
 
     # 2. Create a list to hold the images and titles.
     hemisphere_image_urls = []
-    site = 'https://astrogeology.usgs.gov/'
+    # site = 'https://astrogeology.usgs.gov/'
     # 3. Write code to retrieve the image urls and titles for each hemisphere.
     for hemi in range(4):
-        
         # Create dictionary object inside the for loop
         hemi_dict = {}    
         keys = range(2)
         # click the link
         link = browser.find_by_tag("div.description a.itemLink.product-item")[hemi]
         link.click()
-        
         # Reset the parser
         html2 = browser.html
         image_soup = soup(html2, 'html.parser')
-        
+    
         # get the image link for the full sized image
         image_target = image_soup.select_one('li a').get('href')
-        
+    
         # get the title for the image
         image_title = image_soup.select_one('h2').get_text()
         values = [image_target, image_title]
         # For loop will: Click on each link, navigate to full-res image and pull image URL string and title for each image
         for key in keys:
             hemi_dict[key] = values[key]
-            hemi_dict['img_url'] = hemi_dict.pop(0)
-            hemi_dict['title'] = hemi_dict.pop(1)
-            hemisphere_image_urls.append(hemi_dict)
-            browser.back()
-
+        hemi_dict['img_url'] = hemi_dict.pop(0)
+        hemi_dict['title'] = hemi_dict.pop(1)
+        hemisphere_image_urls.append(hemi_dict)
+        browser.back()
+        
     return hemisphere_image_urls
 
 
